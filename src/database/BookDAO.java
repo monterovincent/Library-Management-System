@@ -405,6 +405,44 @@ public class BookDAO {
         }
         return copies;
     }
+    
+    /**
+     * Retrieves a BookCopy from the database by barcode.
+     *
+     * @param barcode - barcode of the copy to find
+     * @return        - matching BookCopy or null
+     */
+    public BookCopy getBookCopyByBarcode(String barcode) {
+        String sql = "SELECT * FROM book_copies " +
+                     "WHERE barcode = ?";
+
+        try {
+            java.sql.Connection conn =
+                database.DatabaseConnection
+                    .getInstance().getConnection();
+            java.sql.PreparedStatement stmt =
+                    conn.prepareStatement(sql);
+            stmt.setString(1, barcode);
+
+            java.sql.ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new BookCopy(
+                    rs.getInt("copy_id"),
+                    rs.getString("barcode"),
+                    CopyStatus.valueOf(
+                        rs.getString("status")),
+                    rs.getString("book_isbn")
+                );
+            }
+
+        } catch (java.sql.SQLException e) {
+            System.out.println(
+                "Error looking up barcode: "
+                    + e.getMessage());
+        }
+        return null;
+    }
 
     
     // HELPER METHODS - map database rows to Java objects
