@@ -51,7 +51,7 @@ public class MainMenu {
         this.scanner = new Scanner(System.in);
 
         // LibraryCatalog is shared with BookMenu
-        LibraryCatalog catalog = new LibraryCatalog();
+        LibraryCatalog catalog = new LibraryCatalog(1);
 
         // create all sub-menus with the shared Scanner
         this.bookMenu        = new BookMenu(
