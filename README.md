@@ -109,7 +109,10 @@ CREATE TABLE members (
     name        VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
     phone       VARCHAR(20),
-    status      VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE'
+    status      VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',
+    address     VARCHAR(255),
+    max_borrow_limit INT,
+    membership_date DATE
 );
 
 CREATE TABLE loans (
@@ -118,6 +121,7 @@ CREATE TABLE loans (
     copy_id      INT  NOT NULL,
     loan_date    DATE NOT NULL,
     due_date     DATE NOT NULL,
+    issue_date     DATE NOT NULL,
     return_date  DATE,
     status       VARCHAR(20) NOT NULL,
     FOREIGN KEY (member_id) REFERENCES members(member_id),
